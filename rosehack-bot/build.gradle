@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.nathan'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("net.dv8tion:JDA:5.2.2")
+    implementation("ch.qos.logback:logback-classic:1.5.6")
+}
