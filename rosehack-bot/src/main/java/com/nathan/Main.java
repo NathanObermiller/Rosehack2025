@@ -11,7 +11,7 @@ public class Main {
         JDABuilder jdaBuilder = JDABuilder.createDefault(TOKEN.token);
         jdaBuilder.enableIntents(GatewayIntent.MESSAGE_CONTENT);
         JDA jda = jdaBuilder.build();
-        
+
         System.out.println("Hello, World!");
         jda.addEventListener(new Listeners());
     }
