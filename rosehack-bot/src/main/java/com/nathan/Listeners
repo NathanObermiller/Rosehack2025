@@ -3,9 +3,11 @@ package com.nathan;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
@@ -28,9 +30,18 @@ public class Listeners extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction (@NotNull SlashCommandInteractionEvent event) {
         if (event.getName().equals("new-info")) {
+            OptionMapping mmStatus = event.getOption("status");
+            boolean mmStatusBool = mmStatus.getAsBoolean();
             InfoCommand.newInfo(event);
         }
         else if (event.getName().equals("search")) {
+
+        }
+    }
+
+    @Override
+    public void onModalInteraction (@NotNull ModalInteractionEvent event) {
+        if (event.getModalId().equals("info-modal")) {
 
         }
     }
