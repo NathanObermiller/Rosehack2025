@@ -1,0 +1,30 @@
+package com.nathan;
+
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.text.TextInput;
+import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
+import net.dv8tion.jda.api.interactions.modals.Modal;
+import org.jetbrains.annotations.NotNull;
+
+public class InfoCommand {
+    public static void newInfo(@NotNull SlashCommandInteractionEvent event) {
+        TextInput name = TextInput.create("name-field", "Name", TextInputStyle.SHORT)
+                .setRequired(true)
+                .setMinLength(1)
+                .setMaxLength(50)
+                .build();
+
+        TextInput description = TextInput.create("description-field", "Write a short description!", TextInputStyle.PARAGRAPH)
+                .setRequired(true)
+                .build();
+
+        Modal infoModal = Modal.create("info-modal", "Create your profile")
+                    .addActionRow(name)
+                    .addActionRow(description)
+                    .build();
+
+        event.replyModal(infoModal)
+                .queue();
+    }
+}
