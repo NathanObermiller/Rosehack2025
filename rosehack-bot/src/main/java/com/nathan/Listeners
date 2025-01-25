@@ -1,0 +1,20 @@
+package com.nathan;
+
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
+
+public class Listeners extends ListenerAdapter {
+    @Override
+    public void onReady (@NotNull ReadyEvent event) {
+        for (Guild guild : event.getJDA().getGuilds()) {
+            for (TextChannel channel : guild.getTextChannels()) {
+                channel.sendMessage("I am now online.").queue();
+            }
+        }
+    }
+}
