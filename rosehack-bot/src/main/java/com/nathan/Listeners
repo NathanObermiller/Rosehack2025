@@ -3,8 +3,11 @@ package com.nathan;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Text;
 
@@ -15,6 +18,20 @@ public class Listeners extends ListenerAdapter {
             for (TextChannel channel : guild.getTextChannels()) {
                 channel.sendMessage("I am now online.").queue();
             }
+        }
+        JDA jda = event.getJDA();
+        jda.upsertCommand("new-info", "upload your info to the bot!")
+                .addOptions(new OptionData(OptionType.BOOLEAN, "status", "Are you a mentor/mentee? [true/false]", true))
+                .queue();
+    }
+
+    @Override
+    public void onSlashCommandInteraction (@NotNull SlashCommandInteractionEvent event) {
+        if (event.getName().equals("new-info")) {
+            InfoCommand.newInfo(event);
+        }
+        else if (event.getName().equals("search")) {
+
         }
     }
 }
