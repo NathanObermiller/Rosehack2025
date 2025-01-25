@@ -15,14 +15,21 @@ public class InfoCommand {
                 .setMaxLength(50)
                 .build();
 
+        TextInput age = TextInput.create("age-field", "Age", TextInputStyle.SHORT)
+                .setRequired(true)
+                .setMinLength(1)
+                .setMaxLength(3)
+                .build();
+
         TextInput description = TextInput.create("description-field", "Write a short description!", TextInputStyle.PARAGRAPH)
                 .setRequired(true)
                 .build();
 
         Modal infoModal = Modal.create("info-modal", "Create your profile")
-                    .addActionRow(name)
-                    .addActionRow(description)
-                    .build();
+                .addActionRow(name)
+                .addActionRow(age)
+                .addActionRow(description)
+                .build();
 
         event.replyModal(infoModal)
                 .queue();
