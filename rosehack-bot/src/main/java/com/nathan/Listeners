@@ -30,7 +30,6 @@ public class Listeners extends ListenerAdapter {
         }
         JDA jda = event.getJDA();
         jda.upsertCommand("new-info", "Upload your info to the bot!")
-                .addOptions(new OptionData(OptionType.BOOLEAN, "status", "Are you a mentor? [mentor - true / mentee - false]", true))
                 .queue();
 
         jda.upsertCommand("search", "Search for a user that fits your criteria")
@@ -51,9 +50,7 @@ public class Listeners extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction (@NotNull SlashCommandInteractionEvent event) {
         if (event.getName().equals("new-info")) {
-            OptionMapping mentorStatus = event.getOption("status");
-            boolean status = mentorStatus.getAsBoolean();
-            InfoCommand.newInfo(event, status);
+            InfoCommand.newInfo(event);
         }
         else if (event.getName().equals("search")) {
             InfoCommand.infoSearch(event);
@@ -78,6 +75,7 @@ public class Listeners extends ListenerAdapter {
         if (event.getModalId().equals("info-modal")) {
             ModalMapping nameValue = event.getValue("name-field");
             ModalMapping ageValue = event.getValue("age-field");
+            ModalMapping statusValue = event.getValue("status-field");
             ModalMapping contactInfoValue = event.getValue("contact-field");
             ModalMapping descriptionValue = event.getValue("description-field");
 
@@ -85,9 +83,16 @@ public class Listeners extends ListenerAdapter {
             String age = ageValue.getAsString();
             String description = descriptionValue.getAsString();
             String contact = contactInfoValue.getAsString();
+            String status = "";
+            if (statusValue.getAsString().equals("Y")) {
+                status = "Mentor";
+            }
+            else {
+                status = "Mentee";
+            }
 
             HashMap<Long, String[]> hs = InfoHashMap.infoHashMap;
-            String[] userInfoArray = {name, age, contact, description};
+            String[] userInfoArray = {name, age, status, contact, description};
             hs.put(Long.parseLong(event.getUser().getId()), userInfoArray);
 
             for (Map.Entry<TextChannel, String> serverInfo : InfoHashMap.announcementMap.entrySet()) {
@@ -100,6 +105,7 @@ public class Listeners extends ListenerAdapter {
                         builder.addField("Someone made a profile you might like",
                                 "Name: " + name
                                 + "\n" + "Age: " + age
+                                + "\n" + "Status: " + status
                                 + "\n" + "Contact Info: " + contact
                                 + "\n" + "Description: " + description, false);
                         channel.sendMessage("")
