@@ -1,0 +1,5 @@
+package com.nathan;
+
+public class TOKEN {
+    public static String token = "[INSERT TOKEN HERE]";
+}
