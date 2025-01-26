@@ -1,14 +1,19 @@
 package com.nathan;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InfoCommand {
-    public static void newInfo(@NotNull SlashCommandInteractionEvent event) {
+    public static void newInfo(@NotNull SlashCommandInteractionEvent event, boolean status) {
         TextInput name = TextInput.create("name-field", "Name", TextInputStyle.SHORT)
                 .setRequired(true)
                 .setMinLength(1)
@@ -21,6 +26,11 @@ public class InfoCommand {
                 .setMaxLength(3)
                 .build();
 
+        TextInput contact = TextInput.create("contact-field", "Contact information", TextInputStyle.SHORT)
+                .setRequired(true)
+                .setMinLength(1)
+                .build();
+
         TextInput description = TextInput.create("description-field", "Write a short description!", TextInputStyle.PARAGRAPH)
                 .setRequired(true)
                 .build();
@@ -28,6 +38,7 @@ public class InfoCommand {
         Modal infoModal = Modal.create("info-modal", "Create your profile")
                 .addActionRow(name)
                 .addActionRow(age)
+                .addActionRow(contact)
                 .addActionRow(description)
                 .build();
 
@@ -36,6 +47,39 @@ public class InfoCommand {
     }
 
     public static void infoSearch(SlashCommandInteractionEvent event) {
-        //Karla is making the search
+        OptionMapping queryValue = event.getOption("query");
+        String queryString = queryValue.getAsString();
+        HashMap<Long, String[]> filteredMap = query(InfoHashMap.infoHashMap, queryString);
+        if (filteredMap == null) {
+            event.reply("Your search is too narrow. Try to broaden your search!")
+                    .queue();
+            return;
+        }
+        EmbedBuilder builder = new EmbedBuilder();
+        int count = 1;
+        for (Map.Entry<Long, String[]> user : filteredMap.entrySet()) {
+            builder.addField(user.getValue()[0], "Age: " + user.getValue()[1]
+                    + "\n" + "Contact Info: " + user.getValue()[2]
+                    + "\n" + "Description: " + user.getValue()[3], false);
+            count++;
+            if (count > 3) {
+                break;
+            }
+        }
+        String message = "";
+        if (count == 2) {
+            message = "I've found someone you might like!";
+        }
+        else {
+            message = "I've found some people you might like!";
+        }
+        event.reply(message)
+                .addEmbeds(builder.build())
+                .queue();
+    }
+
+    public static HashMap<Long, String[]> query(HashMap<Long, String[]> hs, String queryString) {
+        //Karla's code
+        return hs;
     }
 }
