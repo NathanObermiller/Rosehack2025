@@ -2,6 +2,15 @@ package com.nathan;
 
 public class FunFacts {
     public static String[] funFacts = {
-
-    };
+		       "Annie Jump Cannon cataloged around 350,000 stars in her lifetime, developed the modern stellar classification system while employed at Harvard College Observatory in the late 1800s.",
+		       "Martha Euphemia Lofton Haynes, the first African-American woman in the U.S. to earn a Ph.D. in mathematics, devoted much of her life to education, serving on Washington D.C's Board of Education in the 1960s, fighting against racial and economic discrimination.",
+		       "Civil engineer Nora Stanton Blatch, Cornell University's first female engineering graduate, was an active suffragette, and campaigned for women's rights including the right to vote.",
+		       "Beatrice Alice Hicks, the first female engineer employed by Western Electric, developed environmental sensors later used by the U.S. space program, and founded the Society for Women Engineers in 1950.",
+		       "Esther Lederberg, a bacterial genetic poineer, in 1951 discovered the lambda bacteriophage, the first recognized organism that can invade bacteria and live in its DNA, and helped discover that bacteria can mate and exchange genes.",
+		       "Doreen Ware, a computational biologist with the U.S Department of Agriculture's Agricultural Research Service, is a leader in modern genetics, and researched how staple crops evolved, improving modern agricuture practices.",
+		       "Barbara McClintock, ahead of her time, made the amazing discovery that genes jump, uncovering pieces of DNA that can move within a genome, controlling gene expression and resulting in mutations; she won the 1983 Nobel Prize in Physiology or Medicine.",
+		       "Latanya Sweeney, the head of the Data Privacy Lab at Harvard University, helps make today's computing world safer, creating tools to protect computer users' privacy, and developing the theory of 'k-anonymity.'",
+		       "Daniela Rus, the first femaile director of the Massachusetts Institute of Technology's Computer Science and Artificial Intelligence Laboratory, leads projects to develop robots that fly, swim, and bake cookies, including tiny robots that could combine and configure into anything users want.",
+		       "Anna Schwartz, a research economist regarded as one of history's greatest monetary scholars, co-authored 'A Monetary History of the United States, 1867-1960,' a hugely influential book known for its conclusion that Federal Reserve Bank mistakes helped cause the Great Depression."
+		    };
 }
