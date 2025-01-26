@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class InfoCommand {
     public static void newInfo(@NotNull SlashCommandInteractionEvent event, boolean status) {
@@ -49,10 +50,17 @@ public class InfoCommand {
     public static void infoSearch(SlashCommandInteractionEvent event) {
         OptionMapping queryValue = event.getOption("query");
         String queryString = queryValue.getAsString();
-        HashMap<Long, String[]> filteredMap = query(InfoHashMap.infoHashMap, queryString);
-        if (filteredMap == null) {
+        Scanner sc = new Scanner(queryString);
+        HashMap<Long, String[]> filteredMap = new HashMap<>(InfoHashMap.infoHashMap);
+        while (sc.hasNext()) {
+            String nextString = sc.next();
+            System.out.println(nextString);
+            filteredMap = query(filteredMap, nextString);
+        }
+
+        if (filteredMap.isEmpty()) {
             event.reply("Your search is too narrow. Try to broaden your search!")
-                    .queue();
+                .queue();
             return;
         }
         EmbedBuilder builder = new EmbedBuilder();
@@ -79,19 +87,14 @@ public class InfoCommand {
     }
 
     public static HashMap<Long, String[]> query(HashMap<Long, String[]> hs, String queryString) {
-        for (Map.Entry<Long, String[]> user: hs.entrySet()) 
-	{
-		
-		
-		if (user.getValue()[3].contains(queryString))
-				{
-					hashMap1.put(user.getKey(), user.getValue());
-				}
-			
-			
-		
-	}
-	
-	return hs;
+        HashMap<Long, String[]> hashMap1 = new HashMap<>();
+        for (Map.Entry<Long, String[]> user: hs.entrySet())
+        {
+            if (user.getValue()[3].toLowerCase().contains(queryString.toLowerCase()))
+                {
+                    hashMap1.put(user.getKey(), user.getValue());
+                }
+        }
+        return hashMap1;
     }
 }
