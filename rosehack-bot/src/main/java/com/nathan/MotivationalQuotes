@@ -4,13 +4,14 @@ public class MotivationalQuotes {
     public static String[] quotes = {
             "You've got this!",
             "The future belongs to those who believe in the beauty of their dreams.",
-            "Don't wait for the right opportunity: create it.",
+            "Don't wait for the right opportunity; do it now!",
             "The most courageous act is still to think for yourself. Aloud.",
             "You were born to do this.",
             "In order to be irreplaceable, one must always be different.",
             "The only way to do great work is to love what you do.",
             "Success is not the key to happiness. Happiness is the key to success.",
             "It always seems impossible until it's done.",
-            "Do not wait for leaders; do it alone, person to person.",
+            "Do not wait for leaders; do it yourself.",
+            "Remember to take a break from working every once in a while."
     };
 }
