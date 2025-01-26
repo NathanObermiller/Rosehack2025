@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class InfoCommand {
-    public static void newInfo(@NotNull SlashCommandInteractionEvent event, boolean status) {
+    public static void newInfo(@NotNull SlashCommandInteractionEvent event) {
         TextInput name = TextInput.create("name-field", "Name", TextInputStyle.SHORT)
                 .setRequired(true)
                 .setMinLength(1)
@@ -36,9 +36,15 @@ public class InfoCommand {
                 .setRequired(true)
                 .build();
 
+        TextInput status = TextInput.create("status-field", "are you a MENTOR? Y/N", TextInputStyle.SHORT)
+                .setRequired(true)
+                .setMaxLength(1)
+                .build();
+
         Modal infoModal = Modal.create("info-modal", "Create your profile")
                 .addActionRow(name)
                 .addActionRow(age)
+                .addActionRow(status)
                 .addActionRow(contact)
                 .addActionRow(description)
                 .build();
@@ -67,8 +73,9 @@ public class InfoCommand {
         int count = 1;
         for (Map.Entry<Long, String[]> user : filteredMap.entrySet()) {
             builder.addField(user.getValue()[0], "Age: " + user.getValue()[1]
-                    + "\n" + "Contact Info: " + user.getValue()[2]
-                    + "\n" + "Description: " + user.getValue()[3], false);
+                    + "\n" + "Status: " + user.getValue()[2]
+                    + "\n" + "Contact Info: " + user.getValue()[3]
+                    + "\n" + "Description: " + user.getValue()[4], false);
             count++;
             if (count > 3) {
                 break;
@@ -90,7 +97,7 @@ public class InfoCommand {
         HashMap<Long, String[]> hashMap1 = new HashMap<>();
         for (Map.Entry<Long, String[]> user: hs.entrySet())
         {
-            if (user.getValue()[3].toLowerCase().contains(queryString.toLowerCase()))
+            if (user.getValue()[4].toLowerCase().contains(queryString.toLowerCase()))
                 {
                     hashMap1.put(user.getKey(), user.getValue());
                 }
