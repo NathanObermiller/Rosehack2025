@@ -19,8 +19,9 @@ public class SurpriseCommand {
         builder.addField("Here is a random profile.  Let's make new connections!",
                 "Name: " + chosenProfile[0]
                         + "\n" + "Age: " + chosenProfile[1]
-                        + "\n" + "Contact Info: " + chosenProfile[2]
-                        + "\n" + "Description: " + chosenProfile[3], false);
+                        + "\n" + "Status: " + chosenProfile[2]
+                        + "\n" + "Contact Info: " + chosenProfile[3]
+                        + "\n" + "Description: " + chosenProfile[4], false);
         event.reply("")
                 .addEmbeds(builder.build())
                 .queue();
