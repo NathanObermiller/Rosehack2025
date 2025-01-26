@@ -17,6 +17,7 @@ import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Listeners extends ListenerAdapter {
@@ -42,6 +43,9 @@ public class Listeners extends ListenerAdapter {
         jda.upsertCommand("notify-me", "Receive an announcement when someone creates a profile that matches your criteria")
                 .addOptions(new OptionData(OptionType.STRING, "keywords", "Specify keywords, separated by a space", true))
                 .queue();
+
+        jda.upsertCommand("surprise-me", "Finds you a random profile!  Make some connections :)")
+                .queue();
     }
 
     @Override
@@ -63,6 +67,9 @@ public class Listeners extends ListenerAdapter {
             String keywordsString = keywordsValue.getAsString();
             InfoHashMap.announcementMap.put(announcementChannel, keywordsString);
             event.reply("Your server has successfully been added to the announcement list!").queue();
+        }
+        else if (event.getName().equals("surprise-me")) {
+            SurpriseCommand.surpriseMe(event);
         }
     }
 
