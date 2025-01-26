@@ -1,7 +1,11 @@
 package com.nathan;
 
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+
 import java.util.HashMap;
 
 public class InfoHashMap {
     public static HashMap<Long, String[]> infoHashMap = new HashMap<>();
+
+    public static HashMap<TextChannel, String> announcementMap = new HashMap<>();
 }
