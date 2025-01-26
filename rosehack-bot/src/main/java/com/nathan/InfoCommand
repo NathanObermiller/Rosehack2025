@@ -79,7 +79,19 @@ public class InfoCommand {
     }
 
     public static HashMap<Long, String[]> query(HashMap<Long, String[]> hs, String queryString) {
-        //Karla's code
-        return hs;
+        for (Map.Entry<Long, String[]> user: hs.entrySet()) 
+	{
+		
+		
+		if (user.getValue()[3].contains(queryString))
+				{
+					hashMap1.put(user.getKey(), user.getValue());
+				}
+			
+			
+		
+	}
+	
+	return hs;
     }
 }
