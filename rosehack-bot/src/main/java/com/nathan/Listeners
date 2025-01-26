@@ -1,5 +1,6 @@
 package com.nathan;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -15,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Text;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Listeners extends ListenerAdapter {
     @Override
@@ -32,6 +35,13 @@ public class Listeners extends ListenerAdapter {
         jda.upsertCommand("search", "Search for a user that fits your criteria")
                 .addOptions(new OptionData(OptionType.STRING, "query", "Specify your search with a few key words separated by spaces", true))
                 .queue();
+
+        jda.upsertCommand("motivation", "Get some motivation! :)")
+                .queue();
+
+        jda.upsertCommand("notify-me", "Receive an announcement when someone creates a profile that matches your criteria")
+                .addOptions(new OptionData(OptionType.STRING, "keywords", "Specify keywords, separated by a space", true))
+                .queue();
     }
 
     @Override
@@ -43,6 +53,16 @@ public class Listeners extends ListenerAdapter {
         }
         else if (event.getName().equals("search")) {
             InfoCommand.infoSearch(event);
+        }
+        else if (event.getName().equals("motivation")) {
+            MotivationCommand.motivationCommand(event);
+        }
+        else if (event.getName().equals("notify-me")) {
+            TextChannel announcementChannel = event.getChannel().asTextChannel();
+            OptionMapping keywordsValue = event.getOption("keywords");
+            String keywordsString = keywordsValue.getAsString();
+            InfoHashMap.announcementMap.put(announcementChannel, keywordsString);
+            event.reply("Your server has successfully been added to the announcement list!").queue();
         }
     }
 
@@ -62,6 +82,26 @@ public class Listeners extends ListenerAdapter {
             HashMap<Long, String[]> hs = InfoHashMap.infoHashMap;
             String[] userInfoArray = {name, age, contact, description};
             hs.put(Long.parseLong(event.getUser().getId()), userInfoArray);
+
+            for (Map.Entry<TextChannel, String> serverInfo : InfoHashMap.announcementMap.entrySet()) {
+                Scanner sc = new Scanner(serverInfo.getValue());
+                TextChannel channel = serverInfo.getKey();
+                while (sc.hasNext()) {
+                    String nextQuery = sc.next();
+                    if (description.toLowerCase().contains(nextQuery.toLowerCase())) {
+                        EmbedBuilder builder = new EmbedBuilder();
+                        builder.addField("Someone made a profile you might like",
+                                "Name: " + name
+                                + "\n" + "Age: " + age
+                                + "\n" + "Contact Info: " + contact
+                                + "\n" + "Description: " + description, false);
+                        channel.sendMessage("")
+                                .addEmbeds(builder.build())
+                                .queue();
+                        break;
+                    }
+                }
+            }
 
             event.reply("Data successfully added. Thank you!").queue();
         }
