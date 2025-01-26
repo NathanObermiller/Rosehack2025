@@ -1,0 +1,17 @@
+package com.nathan;
+
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Random;
+
+public class MotivationCommand {
+    public static void motivationCommand(@NotNull SlashCommandInteractionEvent event) {
+        Random rand = new Random();
+        int randInt = rand.nextInt(MotivationalQuotes.quotes.length);
+        String chosenQuote = MotivationalQuotes.quotes[randInt];
+
+        event.reply("Here's some motivation:\n" +
+                chosenQuote).queue();
+    }
+}
