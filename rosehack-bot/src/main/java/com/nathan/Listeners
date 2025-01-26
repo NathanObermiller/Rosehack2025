@@ -45,6 +45,9 @@ public class Listeners extends ListenerAdapter {
 
         jda.upsertCommand("surprise-me", "Finds you a random profile!  Make some connections :)")
                 .queue();
+
+        jda.upsertCommand("funfact", "Have a fun fact :)")
+                .queue();
     }
 
     @Override
@@ -67,6 +70,9 @@ public class Listeners extends ListenerAdapter {
         }
         else if (event.getName().equals("surprise-me")) {
             SurpriseCommand.surpriseMe(event);
+        }
+        else if (event.getName().equals("funfact")) {
+            FunFactCommand.funFactCommand(event);
         }
     }
 
